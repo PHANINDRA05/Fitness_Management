@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <title>DashBoard</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://kit.fontawesome.com/a4a80a4593.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./dycalendar.css">
+    <style>
+        *{
+            font-family: 'Dosis', sans-serif;
+            color: #124a63;
+            background-color: white;
+            /* background: linear-gradient(to right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100)); */
+        }
+        body{
+            
+            padding: 0;
+            margin: 0;
+            background-color: white;
+        }
+        h4,p,h3,i{
+            background: transparent!important;
+        }
+        .dashboard-nav{
+            padding: 0;
+        }
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background: linear-gradient(to bottom, rgba(74, 194, 154,0.6), rgba(189, 255, 243,0.6));
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            backdrop-filter: blur(10px);
+        }
+        .card-body{
+            background: #fff;
+        }
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #fff;
+            display: block;
+            transition: 0.3s;
+            background: transparent;
+        }
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        .packlist{
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+        .packlist-body{
+            background: transparent;
+            position: relative;
+            z-index: 10;
+        }
+        .packlist::after{
+            position: absolute;
+            transform: translateZ(-10px);
+            content: "";
+            width: 330px;
+            height: 330px;
+            border-radius: 50%;
+            right: -50px;
+            top: -140px;
+            background-color:rgba(102,209,242,0.2);
+        }
+        .packlist::before{
+            position: absolute;
+            content: "";
+            width: 330px;
+            transform: translateZ(-10px);
+            height: 330px;
+            border-radius: 50%;
+            right: 350px;
+            top: 280px;
+            background-color:rgba(102,209,242,0.2);
+        }
+        .dashboard-icon{
+            background: transparent;
+
+        }
+        .dashboard-icon i{
+            background: transparent;
+            display: flex;
+            align-items: center;
+            color: #fff;
+
+        }
+        .sidenav-box:hover{
+            background:#e8eaf6;
+            margin-left: 30px;
+            border-right: 5px solid #2640a3;
+            border-top-left-radius: 80px 80px;
+            border-bottom-left-radius: 80px 80px;
+        }
+        .sidenav-box:hover a,.sidenav-box:hover i{
+            color: #124a63;
+        }
+        .content-1{
+            padding: 5px;
+            border-radius: 10px 10px;
+            width: 100%;
+            background: transparent;
+        }
+        .content-1 div{
+            background: transparent;
+        }
+        .content-1 .row div i{
+            font-size: 30px;
+            margin-top: 18px;
+        }
+        .content-1:hover{
+            background: #0b2997;
+        }
+        .content-1:hover .row div h4, .content-1:hover .row div p , .content-1:hover p{
+            color: #fff;
+        }
+        .content-1:hover .row div i{
+            color: yellow;
+        }
+        .content-1 .row div h4{
+            color: #F28F38;
+        }
+        .sub-content{
+            background: transparent;
+            margin-left: 1px; 
+            margin-right: 1px;
+        }
+        .heading{
+            background: transparent;
+        }
+        .container-calendar{
+            width: 323px;
+            min-height: 390px;
+        }
+        .dycalendar-month-container{
+            background:transparent;
+        }
+        #dycalendar{
+            width: 120%;
+            padding: 10px;
+        }
+        #dycalendar table{
+            width: 105%;
+            margin-top: 40px;
+            border-spacing: 5px;
+        }
+        #dycalendar table tr:nth-child(1) td{
+            background: #037F8C;
+            color: #fff;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        #dycalendar table td{
+            color:blue;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        #dycalendar table td:hover{
+            background:#B594FF;
+            color: #fff!important;
+        }
+        .dycalendar-month-container .dycalendar-today-date,.dycalendar-month-container .dycalendar-target-date{
+            background: #fff;
+            color: #111!important;
+        } 
+        .dycalendar-month-container .dycalendar-header .dycalendar-prev-next-btn.prev-btn{
+            background:#F28F38;
+            color: #fff;
+            width: 44px;
+            height: 38px;
+            left: 4px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+        .dycalendar-month-container .dycalendar-header .dycalendar-prev-next-btn.next-btn{
+            background:#F28F38;
+            color: #fff;
+            width: 44px;
+            height: 38px;
+            right: 4px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+        .dycalendar-month-container .dycalendar-span-month-year{
+            font-size: 1.5em;
+            font-weight: 500;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="total body">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light dashboard-nav d-flex justify-content-around">
+        <div class="container-fluid ">
+          <div class="d-flex justify-content-center">
+            <a class="navbar-brand" href="#"  onclick="openNav()">Username</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse d-flex justify-content-around"  id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+              <li class="nav-item">
+              </li>
+              
+            </ul>
+            </div>
+        </div>
+      </nav>
+
+      <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="d-flex justify-content-between dashboard-icon sidenav-box">
+          <i class="fas fa-home"></i>  
+          <a href="#">DashBoard</a> 
+        </div>
+        <div class="d-flex justify-content-between dashboard-icon sidenav-box">
+            <i class="fas fa-list"></i>  
+            <a href="/customerlist">Customer Details</a>
+        </div>
+        <div class="d-flex justify-content-between dashboard-icon sidenav-box">
+            <i class="fas fa-calendar-alt"></i>
+            <a href="/workout_plan">Workout Plans</a>
+        </div>
+        <div class="d-flex justify-content-between dashboard-icon sidenav-box">
+            <i class="fas fa-sign-out-alt"></i>
+            <a href="/login">Log Out</a>
+        </div>
+      </div>
+
+      <br>      
+<div class="whole">
+      <div class="head"> <p style="font-size: 100px; margin-left: 75px;" >Weight Gain Plan </p></div>
+      <div class="matter">
+        <h1>The 6-Day Workout Routine</h1>
+<h1>Week 1:</h1>
+<h4>  <p style="color:black;"> high intensity with no rest in between exercises.<br>
+Complete all exercises listed below continuously with no rest<br>
+After completing the set of exercises (called a circuit), take a 2-minute rest and repeat 2 additional times for a total of 3 circuits ( each circuit is considered one set)<br>
+Monday: Upper Body<br>
+Warm-up:<br>
+30 Seconds Of Jump Rope<br>
+A Couple Set Of Pushups (just to get the blood flowing)<br>
+Arm Circles (I like to use a 5 pound weight to warm up my shoulders)<br><br>
+Set of pullups<br>
+Workout Routine:<br>
+Flat Bench Press- 15 repetitions <br>
+Pushups (until failure)<br>
+Bent Over dumbbell row- 15 reps<br>
+Assisted Neutral Grip Pull-Ups (Use just enough assisted weight to allow you to do 15 reps)<br>
+Standing Dumbbell Bicep Curls- 15 reps<br>
+Overhead Triceps Extension- 15 reps<br><br>
+Lateral/Front Raises – 10 reps each (So do 10 reps of lateral raises followed by 10 reps of front raises)<br>
+Standing Barbell Shoulder Press- 15 reps<br>
+Captain’s Chair leg raise (abs) – until failure<br>
+Crunches with legs in the air (abs) – until failure<br>
+With your legs in the air, crunch up so that your shoulder raises slightly above the ground<br>
+Hold for 2 seconds<br>
+Lower yourself to starting position and repeat<br>
+Take a 2 minute rest and repeat – Do this 3 times for a total of 3 sets.<br></p></h4>
+<br>
+<h1>Tuesday:</h1>
+<h4>  <p style="color:black;">45 minutes of cardio of your choice (running, elliptical, biking, basketball, etc)<br>
+Wednesday: Lower body<br>
+Warm-up:<br>
+5 Minute Bike Warm-Up<br>
+30 Seconds Of Jump Rope<br>
+Body Weight Squats<br>
+Walking lunges <br>
+Fire hydrants<br>
+Workout Routine:<br>
+Dumbbell Squats- 15 reps<br>
+Hold a dumbbell in each hand<br>
+Keep feet shoulder width apart and keep your chest up with head pointing forward<br>
+Lower yourself so that the angle in your knee joint is 90 degrees<br>
+Hold for a second and raise yourself to starting position<br>
+Barbell Romanian Deadlifts -15 reps<br><br>
+Split Squats- 15 reps each side<br>
+Squat Jumps- 15 jumps<br>
+Calf Raises- 15 reps<br>
+Front Plank – 1 minute or until failure<br>
+Side Plank- 1 minute hold on each side or until failure<br>
+The same concept as a front plank except you are lying on one side<br>
+You will be leaning on your forearm with your other arm behind your back<br>
+Make sure your back is flat with no arch<br>
+Keep your feet staggered, not on top of each other<br>
+After completing one side, do the other side the exact same way<br>
+Take a 2 minute rest and repeat for a total of 3 sets<br>
+<br></p></h4>
+<h1>Thursday: off</h1><br>
+<h1>Friday:</h1><br>
+<h4>  <p style="color:black;">45 minutes of cardio of choice (running, elliptical, stair master, bike, sports, etc.)<br>
+Saturday: Full Body<br>
+Warm-up:<br>
+5 Minute Bike Warm-Up<br>
+30 seconds of jump rope<br>
+Body Weight Squats<br>
+Walking lunges <br>
+Pushups<br>
+<br>
+Arm circles with 5 pound weight<br>
+Workout Routine:<br>
+ Bent Over Dumbbell Row (15 reps)<br>
+Leg Press (15 reps)<br>
+Dumbbell Bench Press (15 reps)<br>
+Romanian Deadlift (15 reps)<br>
+Push-Ups (until failure)<br>
+Assisted Wide Grip Pull-Ups (15 reps)<br>
+Squat Jumps (15 reps)<br>
+Front Plank (1 minute)<br>
+Captain’s Chair Leg Raises- until failure<br>
+Take a 2-minute rest and perform the circuit 2 more times for a total of 3 sets.<br></h4>
+<br>
+<h1>Sunday</h1>
+<h4>  <p style="color:black;">This is going to be a light day. We don’t want to push your body too fast too quickly to cause an injury and a key to training effectively is not to over-train.</p></h4>
+<br>
+<h4>  <p style="color:black;">The workout routine:<br>
+Cardio of choice (i.e. Run, bike, elliptical, basketball, boxing, tennis, etc.)<br></p></h4>
+<br>
+
+<br>
+      </div>
+      <head>
+        <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: yellow;
+        }
+        .whole{
+            margin-left: 40px;
+        }
+        .head{
+            margin-left:655px;
+        }
+        </style>
+        </head>
+        <body>
+        
+      
+        
+        <table>
+            <h1>Muscle Gain Workout</h1>
+            <br>
+            <table bordercolor="black">
+              <tr>
+              <div class="ma">  <th>Exercise</th>
+                <th>Sets</th>
+                <th>Reps</th>
+              </tr>
+              <tr>
+                <td><p style="color:black;">Incline Dumbell Press</td></p>
+                <p style="color:black;"><td>4</td></p>
+                <p style="color:black;"><td>12-15</td></p>
+              </tr>
+              <tr>
+               
+                <td><p style="color:black;">Flat Dumbell Press</td></p>
+                <p style="color:black;"><td>4</td></p>
+                <p style="color:black;"><td>12-15</td></p>
+              </tr>
+              <tr>
+               <td><p style="color:black;">Flat Dumbell Press</td></p>
+                <p style="color:black;"><td>4</td></p>
+                <p style="color:black;"><td>12-15</td></p>
+              </tr>
+              <tr>
+                <td><p style="color:black;">Flat Dumbell Press</td></p>
+                <p style="color:black;"><td>4</td></p>
+                <p style="color:black;"><td>12-15</td></p>
+              </tr>
+              <tr>
+                <td><p style="color:black;">Flat Dumbell Press</td></p>
+                <p style="color:black;"><td>4</td></p>
+                <p style="color:black;"><td>12-15</td></p>
+              </tr>
+              <tr>
+               <td><p style="color:black;">Flat Dumbell Press</td></p>
+                <p style="color:black;"><td>4</td></p>
+                <p style="color:black;"><td>12-15</td></p>
+              </tr>
+            </table>
+            <br>
+            <br>
+            <br>
+        </table>
+    </div>
+</div>
+        </body>
+        </html>
+        
+      <script>
+        function openNav() {
+          document.getElementById("mySidenav").style.width = "250px";
+        }
+        function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+        }
+      </script>
+
+      <script src="./dycalendar.js"></script>
+      <script>
+          dycalendar.draw({
+              target:'#dycalendar',
+              type:'month',
+              dayformat:'full',
+              highlighttargetdate:true,
+              prevnextbutton:'show',
+          })
+      </script>
+
+      <script src="./dashboard_data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+</body>
+</html>
+<style>
+    .head{
+        margin-left: 295px;
+        font-weight: bold;
+    }
+   
+</style>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            font-family: 'Dosis', sans-serif;
+        }
+        .card{
+            margin-top: 50px;
+            background: #63D4FF;
+        }
+        .card-header{
+            background: #63D4FF;
+        }
+        
+    </style>
+</head>
+
+  
+     <div class="container">
+    <a href="/dashboard"><button type="button" class="btn btn-primary btn-lg" style=" margin-top:20px; background-color: #fff; color: black;">Go to Dashboard</button></a>
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-8">
+                    <h4 class="font-weight-bold">All Customers</h4>
+                </div>
+                <div class="col-4">
+                    <a href="/addCustomer" class="btn btn-success float-right"><i class="fa fa-plus mr-1"></i>Add New</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover"> 
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone Number</th>
+                        <th scope="col">Package Details</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if(customers.length>0){%>
+                        <% for(let customer of customers) { %>
+                            <tr>
+                                <th scope="row"><%=customer.firstname%> <%=customer.lastname%></th>
+                                <td><%= customer.phonenumber%></td>
+                                <td><%= customer.packagedetails%></td>
+                                <td> 
+                                    <a href="/updateCustomer/<%= customer._id%>" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                    <a href="/deleteCustomer/<%= customer._id%>" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            <% } %>
+                        <%} else {%>
+                            <tr>
+                                <td>No data Found</td>
+                            </tr>
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    <!-- <script>
+        function openNav() {
+          document.getElementById("mySidenav").style.width = "250px";
+        }
+        function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+        }
+      </script> -->

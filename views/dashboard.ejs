@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <title>DashBoard</title>
+    <script src="https://kit.fontawesome.com/a4a80a4593.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://kit.fontawesome.com/a4a80a4593.js" crossorigin="anonymous"></script>
+    <style>
+        *{
+            font-family: 'Dosis', sans-serif;
+            color: #124a63;
+            background-color: #e9ecef;
+            /* background: linear-gradient(to right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100)); */
+        }
+        body{
+            padding: 0;
+            margin: 0;
+            background-color: #fff;
+        }
+        .dashboard-nav{
+            padding: 0;
+        }
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: -16px;
+            background: linear-gradient(to bottom, rgba(74, 194, 154,0.6), rgba(189, 255, 243,0.6));
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            padding-left: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #fff;
+            display: block;
+            transition: 0.3s;
+            background: transparent;
+        }
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        .sidenav-box:hover{
+            background:#e8eaf6;
+            margin-left: 5px;
+            padding:15px;
+            border-right: 5px solid #2640a3;
+            border-top-left-radius: 90px 90px;
+            border-bottom-left-radius: 90px 90px;
+        }
+        .sidenav-box:hover a,.sidenav-box:hover i{
+            color: #124a63;
+        }
+        @media screen and (max-height: 450px) {
+            .sidenav {padding-top: 15px;}
+            .sidenav a {font-size: 18px;}
+        }
+        .TotalUsers {
+            background: linear-gradient(to right, rgba(252, 92, 125,1.8), rgba(106, 130, 251,1.8));
+        }
+        .TotalUsers p,h4{
+            background:transparent;
+            color: #e9ecef;
+        }
+        .MenUsers{
+            background: linear-gradient(to right, rgba(54, 209, 220,1.8), rgba(91, 134, 229,1.8));
+        }
+        .MenUsers p,h4{
+            background:transparent;
+            color: #e9ecef;
+        }
+        .WomenUsers{
+            background: linear-gradient(to right, rgba(17, 153, 142,1.8), rgba(56, 239, 125,1.8));
+        }
+        .WomenUsers p,h4{
+            background:transparent;
+            color: #e9ecef;
+        }
+        .card{
+            border-radius: 5%;
+            overflow: hidden;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .card::after{
+            position: absolute;
+            content: "";
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            right: -40px;
+            top: -40px;
+            background-color:rgba(240,240,240,0.2);
+        }
+        .card::before{
+            position: absolute;
+            content: "";
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            right: -40px;
+            top: 70px;
+            background-color:rgba(240,240,240,0.2);
+        }
+        .dashboard-icon{
+            background: transparent;
+
+        }
+        .dashboard-icon i{
+            background: transparent;
+            display: flex;
+            align-items: center;
+            color: #fff;
+
+        }
+        
+    </style>
+</head>
+<body> 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light dashboard-nav d-flex justify-content-around"  style="background-color: #fff;">
+        <div class="container-fluid"  style="background-color: #fff;">
+          <div class="d-flex justify-content-center"  style="background-color: #fff;">
+            <a class="navbar-brand" href="#"  onclick="openNav()"  style="background-color: #fff;">Username</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+          
+        </div>
+      </nav>
+      <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="d-flex justify-content-between dashboard-icon sidenav-box">
+          <i class="fas fa-home"></i>  
+          <a href="#">DashBoard</a> 
+        </div>
+        <div class="d-flex justify-content-between dashboard-icon sidenav-box">
+            <i class="fas fa-list"></i>  
+            <a href="/customerlist">Customer Details</a>
+        </div>
+        <div class="d-flex justify-content-between dashboard-icon sidenav-box">
+            <i class="fas fa-calendar-alt"></i>
+            <a href="/workout_plan">Workout Plans</a>
+        </div>
+        <div class="d-flex justify-content-between dashboard-icon sidenav-box">
+            <i class="fas fa-sign-out-alt"></i>
+            <a href="/login">Log Out</a>
+        </div>
+      </div>
+
+      <br>
+      <div class="container" style="background-color: #fff;">
+        <!-- <div class="alert alert-secondary" style="background-color: #2b3c46;" role="alert"> -->
+            <h2  style="background-color: #fff;">Welcome Username</h2>
+        <!-- </div> -->
+      </div>
+
+
+      <div class="container" >
+        <div class="row" >
+          <div class="col" style="background-color: #fff;">    
+            <div class="card">
+                <div class="card-body TotalUsers">
+                    <p class="card-title">Total Users</p>
+                    <br>
+                    <h4>346</h4>
+                    <br>
+                    <p class="card-text"></p>
+                </div>
+            </div>
+            </div>
+            <div class="col" style="background-color: #fff;">    
+                <div class="card">
+                    <div class="card-body MenUsers">
+                        <p class="card-title">Men Users</p>
+                        <br>
+                        <h4>500</h4>
+                        <br>
+                        <p class="card-text"></p>
+                    </div>
+                    </div>
+                </div>
+            <div class="col" style="background-color: #fff;">    
+                <div class="card">
+                    <div class="card-body WomenUsers">
+                        <p class="card-title">Women Users</p>
+                        <br>
+                        <h4>50</h4>
+                        <br>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <br>
+      <br>
+      <br>
+      <div class="container">
+        <div class="row ">
+          <div class="col" style="background-color: #fff;" >    
+             <canvas id="visitor-data" height="304" width="500"  style="background-color: #fff;"></canvas>
+          </div>
+          <div class="col"  style="background-color: #fff;">    
+            <canvas id="visitor-data2" height="304" width="500"  style="background-color: #fff;"></canvas>
+            
+         </div>
+        </div>
+      </div>
+      <br>
+      <script>
+        function openNav() {
+          document.getElementById("mySidenav").style.width = "250px";
+        }
+        function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+        }
+      </script>
+
+      <script src="dashboard_data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+</body>
+</html>

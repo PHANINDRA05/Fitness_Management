@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            font-family: 'Dosis', sans-serif;
+        }
+        .card{
+            margin-top: 50px;
+            background: #63D4FF;
+        }
+        .card-header{
+            background: #63D4FF;
+        }
+    </style>
+</head>
+<div class="container" style="margin-top: 50px;">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="font-weight-bold">Update Customer</h4>
+        </div>
+        <div class="card-body">
+            <form action="/updateCustomer/<%= customer._id %>"method="POST">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="col-form-label" for="firstname">First Name</label>
+                            <input type="text" class="form-control" value="<%= customer.firstname %>" name="firstname" id="firstname" placeholder="Enter First Name">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="col-form-label" for="lastname">Last Name</label>
+                            <input type="text" class="form-control" value="<%= customer.lastname %>" name="lastname" id="lastname"  placeholder="Enter Last Name">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="col-form-label" for="phonenumber">Phone Number</label>
+                            <input type="text" class="form-control" value="<%= customer.phonenumber %>" name="phonenumber" id="phonenumber" placeholder="Enter Phone Number">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <!-- <label class="col-form-label" for="pincode">Pincode</label>
+                            <input type="text" class="form-control" value="<%= customer.pincode %>" name="pincode" id="pincode" placeholder="22222-2222222-2"> -->
+                            <label class="col-form-label" for="packagedetails">Package Details</label>
+                            <!-- <input type="text" class="form-control" name="packagedetails" id="packagedetails"> -->
+                            <select class="form-control" value="<%= customer.pincode %>" name="packagedetails" id="packagedetails">
+                                <option>1 month</option>
+                                <option>Quarter Year</option>
+                                <option>Half Year</option>
+                                <option>One Year</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="col-form-label" for="amountpaid">Amount Paid</label>
+                            <input type="text" class="form-control" value="<%= customer.amountpaid%>" name="amountpaid" id="amountpaid">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="col-form-label" for="dateofpayment">Date of Payment</label>
+                            <input type="text" placeholder="DD-MM-YYYY" class="form-control" value="<%= customer.dateofpayment %>" name="dateofpayment" id="dateofpayment">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="col-form-label" for="enddateofpayment">End Date of Payment</label>
+                            <input type="text" placeholder="DD-MM-YYYY" class="form-control" value="<%= customer.enddateofpayment%>" name="enddateofpayment" id="enddateofpayment">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="col-form-label" for="gender">Gender</label>
+                            <!-- <input type="text" class="form-control" name="packagedetails" id="packagedetails"> -->
+                            <select class="form-control" value="<%= customer.gender%>" name="gender" id="gender">
+                                <option>Male</option>
+                                <option>Female</option>
+                              </select>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="col-form-label" for="address">Address</label>
+                            <textarea class="form-control" name="address" id="address" rows="3">
+                                <%= customer.address%>
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 5px;">
+                    <button type="submit" class="btn btn-success">Update</button>
+                    <a href="/customerlist" class="btn btn-light">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
